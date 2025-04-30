@@ -80,6 +80,9 @@ def eightPuzzle(Start, Goal) :
     heap = []
 
 
+    
+
+
     heapq.heappush(heap, (Manhattan(Start), Start))
 
 
@@ -88,8 +91,11 @@ def eightPuzzle(Start, Goal) :
 
         Heu, node = heapq.heappop(heap)
 
+        visited.add(toTupple(node))
 
-        if node == Goal :
+
+
+        if node == toTupple(Goal) :
 
 
             node = toTupple(node) 
@@ -100,6 +106,13 @@ def eightPuzzle(Start, Goal) :
                 path.append(node)
 
                 node = parent[node]
+
+
+
+            path.reverse()
+
+
+
 
             
 
@@ -119,23 +132,31 @@ def eightPuzzle(Start, Goal) :
 
         
 
-        x, y = FindIndex(Start)
+        x, y = FindIndex(node)
 
 
         for xi, yi in moves :
 
             nxi, nyi = x + xi, y + yi
 
+            
+
 
             if isValid(nxi, nyi) :
 
-                
-                new_start = [a[:] for a in node]
+
+
+
+
+
 
                 
+                new_start = [list(row[:]) for row in node]
 
 
-                new_start[nxi], new_start[nyi] = new_start[x], new_start[y]
+
+                new_start[x][y], new_start[nxi][nyi] = new_start[nxi][nyi], new_start[x][y]
+
 
 
                 new_start = toTupple(new_start)
@@ -143,13 +164,11 @@ def eightPuzzle(Start, Goal) :
 
                 if new_start not in visited :
 
-
-
                     parent[new_start] = node
 
                     heapq.heappush(heap, (Manhattan(new_start), new_start))
 
-
+                
 
 
 
