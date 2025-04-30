@@ -1,6 +1,13 @@
 import heapq
 
 
+def isValid(x, y) :
+
+    return 0 <= x < 3 and 0 <= y < 3
+
+
+
+
 
 def Manhattan(Puzzle) :
 
@@ -130,22 +137,26 @@ def eightPuzzle(Start, Goal) :
             nxi, nyi = x + xi, y + yi
 
 
-            new_start = [row[:] for row in Start]
+            if isValid(nxi, nyi) :
+
+                
+                new_start = [row[:] for row in Start]
 
 
-            new_start[nxi], new_start[nyi] = new_start[x], new_start[y]
+                new_start[nxi], new_start[nyi] = new_start[x], new_start[y]
 
 
-            new_start = toTupple(new_start)
+                new_start = toTupple(new_start)
 
 
-            if new_start not in visited :
+                if new_start not in visited :
 
 
 
-                parent[new_start] = node
+                    parent[new_start] = node
 
-                heapq.heappush(heap, (Manhattan(new_start), toList(new_start)))
+                    heapq.heappush(heap, (Manhattan(new_start), toList(new_start)))
+
 
 
 
