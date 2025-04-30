@@ -144,12 +144,7 @@ def eightPuzzle(Start, Goal) :
 
             if isValid(nxi, nyi) :
 
-
-
-
-
-
-
+                
                 
                 new_start = [list(row[:]) for row in node]
 

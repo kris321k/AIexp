@@ -1,154 +1,146 @@
-import heapq
+
+import math
+
+def FindMinDistance(distance) :
+
+
+    min = math.inf
+
+    minNode = None
+
+    for key in distance.keys() :
+
+
+        if distance[key] < min :
+
+
+            min = distance[key]
+
+            minNode = key
+
+    
+
+    return minNode
 
 
 
-def BestFirstSearch(graph, start, goal, heu) :
+
+def djikstra(graph, edgeCost, Start) :
+
 
     visited = set()
-
-    queue = []
-
 
 
     path = []
 
-    parent = {start : None}
-
-    heapq.heappush(queue, (heu[start], start))
+    parent = {Start : None}
 
 
+    distance = {}
+
+    distance[Start] = 0
 
 
+    for keys in graph.keys() :
 
+        if keys != Start :
+
+
+            distance[keys] = math.inf
+
+
+    
 
 
     while True :
 
-        print(queue)
 
-
-        heu_value, node = heapq.heappop(queue)
-
-
+        node = FindMinDistance(distance)
 
         visited.add(node)
 
 
-        print("\n")
-
-
-
-
-        if node == goal :
-
-
-            while node is not None :
-
-                path.append(node)
-
-                node = parent[node]
-
-            
-            #printing the graph
-
-            path.reverse()
-
-
-
-
-            print("->".join(path))
-
-
-
-            return
         
-
-
-
-
         for neigbour in graph[node] :
 
 
-            if neigbour not in visited :
-
-
-
-
-                heapq.heappush(queue, (heu[neigbour], neigbour))
+            if distance[node] + edgeCost.get((node, neigbour)) < distance[neigbour] :
 
 
                 parent[neigbour] = node
 
 
-                
+                distance[neigbour] = distance[node] + edgeCost.get((node, neigbour))
+
+        
+
+        #printing the path
 
 
+        while node is not None :
 
-    
+            path.append(node)
 
+            node = parent[node]
+
+        
+        path.reverse()
+
+
+        print("->".join(path))
 
 
 
 
 def main() :
 
+    graph = []
 
-    graph = {}
-
-
-    nodes = int(input("enter the number of edges\n"))
+    edgeCost = {}
 
 
-    for _ in range(nodes) :
 
-        src = input("enter the src\n")
 
-        dest = input("enter the destination\n")
 
-        
+    edges = int(input("enter the number of edges: \n"))
+
+    for _ in range(edges) :
+
+
+        src = input("enter the src: \n")
+
+        dest = input("enter the dest: \n")
+
+        cost = int(input("enter the edge Cost : \n"))
+
+
+
 
         if src not in graph.keys() :
 
             graph[src] = []
 
         
+
         if dest not in graph.keys() :
 
             graph[dest] = []
 
         
+
         graph[src].append(dest)
 
         graph[dest].append(src)
 
+        edgeCost[(src, dest)] = cost
 
-    
-    heuristicValues = {}
-
-
-    for key in graph.keys() :
-
-        heu = int(input(f"enter the heu for {key}"))
-
-        heuristicValues[key] = heu
+        edgeCost[(dest, src)] = cost
 
 
-
-
-    start = input("enter the start node\n")
-
-    goal = input("enter the goal node\n")
-
-    BestFirstSearch(graph,start, goal,heuristicValues)
-
-
-
-
-
-
-        
 
 
 if __name__ == "__main__" :
 
     main()
+
+
