@@ -63,16 +63,6 @@ def toTupple(Puzzle) :
     return tuple(tuple(row) for row in Puzzle)
 
 
-
-def toList(Puzzle) :
-
-
-    return list(list(row) for row in Puzzle)
-
-
-
-
-
 def eightPuzzle(Start, Goal) :
 
 
@@ -140,7 +130,9 @@ def eightPuzzle(Start, Goal) :
             if isValid(nxi, nyi) :
 
                 
-                new_start = [row[:] for row in Start]
+                new_start = [a[:] for a in node]
+
+                
 
 
                 new_start[nxi], new_start[nyi] = new_start[x], new_start[y]
@@ -155,7 +147,7 @@ def eightPuzzle(Start, Goal) :
 
                     parent[new_start] = node
 
-                    heapq.heappush(heap, (Manhattan(new_start), toList(new_start)))
+                    heapq.heappush(heap, (Manhattan(new_start), new_start))
 
 
 
