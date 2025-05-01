@@ -91,8 +91,6 @@ def djikstra(graph, edgeCost, Start) :
 
                 parent[neigbour] = node
 
-                print("i am in the loop")
-
 
 
                 distance[neigbour] = distance[node] + edgeCost.get((node, neigbour))
