@@ -1,7 +1,7 @@
 
 import math
 
-def FindMinDistance(distance) :
+def FindMinDistance(distance, visited) :
 
 
     min = math.inf
@@ -11,12 +11,16 @@ def FindMinDistance(distance) :
     for key in distance.keys() :
 
 
-        if distance[key] < min :
+        if distance[key] < min and key not in visited :
 
 
             min = distance[key]
 
             minNode = key
+
+    
+
+
 
     
 
@@ -36,32 +40,41 @@ def djikstra(graph, edgeCost, Start) :
     parent = {Start : None}
 
 
-    distance = {}
+
+
+    distance = {keys : math.inf for keys in graph.keys() if keys != Start}
 
     distance[Start] = 0
 
 
-    for keys in graph.keys() :
-
-        if keys != Start :
 
 
-            distance[keys] = math.inf
 
 
-    
+    for i in range(10) :
 
 
-    while True :
+        node = FindMinDistance(distance, visited)
+
+        
 
 
-        node = FindMinDistance(distance)
+
+
+        if node == None :
+
+            break
+
+
+        node2 = node
+
+
 
         visited.add(node)
 
 
         
-        for neigbour in graph[node] :
+        for neigbour in graph[node]:
 
 
             if distance[node] + edgeCost.get((node, neigbour)) < distance[neigbour] :
@@ -69,32 +82,48 @@ def djikstra(graph, edgeCost, Start) :
 
                 parent[neigbour] = node
 
+                print("i am in the loop")
+
+
 
                 distance[neigbour] = distance[node] + edgeCost.get((node, neigbour))
+
+
+                print(distance)
+
 
         
 
         #printing the path
 
 
-        while node is not None :
-
-            path.append(node)
-
-            node = parent[node]
-
-        
-        path.reverse()
 
 
-        print("->".join(path))
+
+
+    while node2 is not None :
+
+
+        path.append(node2)
+
+        node2 = parent[node2]
+
+
+    path.reverse()
+
+    print("->".join(path))
+
+    print("the distances are as follows:\n")
+
+    print(distance)
+
 
 
 
 
 def main() :
 
-    graph = []
+    graph = {}
 
     edgeCost = {}
 
@@ -136,7 +165,12 @@ def main() :
 
         edgeCost[(dest, src)] = cost
 
+    
+    start = input("enter the start node:\n")
 
+
+    
+    djikstra(graph, edgeCost, start)
 
 
 if __name__ == "__main__" :
