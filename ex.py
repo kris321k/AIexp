@@ -1,6 +1,9 @@
 
 import math
 
+
+
+
 def FindMinDistance(distance, visited) :
 
 
@@ -35,9 +38,12 @@ def djikstra(graph, edgeCost, Start) :
     visited = set()
 
 
-    path = []
 
     parent = {Start : None}
+
+
+
+
 
 
 
@@ -45,6 +51,9 @@ def djikstra(graph, edgeCost, Start) :
     distance = {keys : math.inf for keys in graph.keys() if keys != Start}
 
     distance[Start] = 0
+
+
+    
 
 
 
@@ -96,28 +105,26 @@ def djikstra(graph, edgeCost, Start) :
 
         #printing the path
 
+    
+    for CurrentNode in graph.keys() :
+
+        path = []
+
+        if CurrentNode == Start :
+
+            continue
 
 
+        while CurrentNode is not None :
 
+            path.append(CurrentNode)
 
+            CurrentNode = parent[CurrentNode]
 
-    while node2 is not None :
+        
+        path.reverse()
 
-
-        path.append(node2)
-
-        node2 = parent[node2]
-
-
-    path.reverse()
-
-    print("->".join(path))
-
-    print("the distances are as follows:\n")
-
-    print(distance)
-
-
+        print("->".join(path))
 
 
 
